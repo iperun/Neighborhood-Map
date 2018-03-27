@@ -56,7 +56,7 @@
 <body>
   <div class="container">
     <div class="options-box">
-      <h1>Find Your New NYC Home</h1>
+      <h1>Hello</h1>
       <div>
         <input id="show-listings" type="button" value="Show Listings">
         <input id="hide-listings" type="button" value="Hide Listings">
@@ -70,6 +70,150 @@
     var markers = [];
 
     function initMap() {
+      var styles = [{
+          "elementType": "geometry",
+          "stylers": [{
+            "color": "#212121"
+          }]
+        },
+        {
+          "elementType": "labels.icon",
+          "stylers": [{
+            "visibility": "off"
+          }]
+        },
+        {
+          "elementType": "labels.text.fill",
+          "stylers": [{
+            "color": "#757575"
+          }]
+        },
+        {
+          "elementType": "labels.text.stroke",
+          "stylers": [{
+            "color": "#212121"
+          }]
+        },
+        {
+          "featureType": "administrative",
+          "elementType": "geometry",
+          "stylers": [{
+            "color": "#757575"
+          }]
+        },
+        {
+          "featureType": "administrative.country",
+          "elementType": "labels.text.fill",
+          "stylers": [{
+            "color": "#9e9e9e"
+          }]
+        },
+        {
+          "featureType": "administrative.land_parcel",
+          "stylers": [{
+            "visibility": "off"
+          }]
+        },
+        {
+          "featureType": "administrative.locality",
+          "elementType": "labels.text.fill",
+          "stylers": [{
+            "color": "#bdbdbd"
+          }]
+        },
+        {
+          "featureType": "poi",
+          "elementType": "labels.text.fill",
+          "stylers": [{
+            "color": "#757575"
+          }]
+        },
+        {
+          "featureType": "poi.park",
+          "elementType": "geometry",
+          "stylers": [{
+            "color": "#181818"
+          }]
+        },
+        {
+          "featureType": "poi.park",
+          "elementType": "labels.text.fill",
+          "stylers": [{
+            "color": "#616161"
+          }]
+        },
+        {
+          "featureType": "poi.park",
+          "elementType": "labels.text.stroke",
+          "stylers": [{
+            "color": "#1b1b1b"
+          }]
+        },
+        {
+          "featureType": "road",
+          "elementType": "geometry.fill",
+          "stylers": [{
+            "color": "#2c2c2c"
+          }]
+        },
+        {
+          "featureType": "road",
+          "elementType": "labels.text.fill",
+          "stylers": [{
+            "color": "#8a8a8a"
+          }]
+        },
+        {
+          "featureType": "road.arterial",
+          "elementType": "geometry",
+          "stylers": [{
+            "color": "#373737"
+          }]
+        },
+        {
+          "featureType": "road.highway",
+          "elementType": "geometry",
+          "stylers": [{
+            "color": "#3c3c3c"
+          }]
+        },
+        {
+          "featureType": "road.highway.controlled_access",
+          "elementType": "geometry",
+          "stylers": [{
+            "color": "#4e4e4e"
+          }]
+        },
+        {
+          "featureType": "road.local",
+          "elementType": "labels.text.fill",
+          "stylers": [{
+            "color": "#616161"
+          }]
+        },
+        {
+          "featureType": "transit",
+          "elementType": "labels.text.fill",
+          "stylers": [{
+            "color": "#757575"
+          }]
+        },
+        {
+          "featureType": "water",
+          "elementType": "geometry",
+          "stylers": [{
+            "color": "#000000"
+          }]
+        },
+        {
+          "featureType": "water",
+          "elementType": "labels.text.fill",
+          "stylers": [{
+            "color": "#3d3d3d"
+          }]
+        }
+      ];
+
       // Constructor creates a new map - only center and zoom are required.
       map = new google.maps.Map(document.getElementById('map'), {
         center: {
@@ -77,6 +221,7 @@
           lng: -73.9980244
         },
         zoom: 13,
+        styles: styles,
         mapTypeControl: false
       });
 
@@ -123,6 +268,17 @@
           }
         }
       ];
+
+      var largeInfowindow = new google.maps.InfoWindow();
+
+      // Style the markers a bit. This will be our listing marker icon.
+      var defaultIcon = makeMarkerIcon('0091ff');
+
+      // Create a "highlighted location" marker color for when the user
+      // mouses over the marker.
+      var highlightedIcon = makeMarkerIcon('FFFF24');
+
+
       var largeInfowindow = new google.maps.InfoWindow();
 
       for (var i = 0; i < locations.length; i++) {
@@ -136,24 +292,30 @@
           animation: google.maps.Animation.DROP,
           id: i
         });
-
         markers.push(marker);
-
+        // Create an onclick event to open the large infowindow at each marker.
         marker.addListener('click', function() {
           populateInfoWindow(this, largeInfowindow);
         });
+        // Two event listeners - one for mouseover, one for mouseout,
+        // to change the colors back and forth.
+        marker.addListener('mouseover', function() {
+          this.setIcon(highlightedIcon);
+        });
+        marker.addListener('mouseout', function() {
+          this.setIcon(defaultIcon);
+        });
       }
+
       document.getElementById('show-listings').addEventListener('click', showListings);
       document.getElementById('hide-listings').addEventListener('click', hideListings);
     }
 
     function populateInfoWindow(marker, infowindow) {
-
       if (infowindow.marker != marker) {
         infowindow.marker = marker;
         infowindow.setContent('<div>' + marker.title + '</div>');
         infowindow.open(map, marker);
-
         infowindow.addListener('closeclick', function() {
           infowindow.marker = null;
         });
@@ -174,6 +336,20 @@
       for (var i = 0; i < markers.length; i++) {
         markers[i].setMap(null);
       }
+    }
+
+    // This function takes in a COLOR, and then creates a new marker
+    // icon of that color. The icon will be 21 px wide by 34 high, have an origin
+    // of 0, 0 and be anchored at 10, 34).
+    function makeMarkerIcon(markerColor) {
+      var markerImage = new google.maps.MarkerImage(
+        'http://chart.googleapis.com/chart?chst=d_map_spin&chld=1.15|0|' + markerColor +
+        '|40|_|%E2%80%A2',
+        new google.maps.Size(21, 34),
+        new google.maps.Point(0, 0),
+        new google.maps.Point(10, 34),
+        new google.maps.Size(21, 34));
+      return markerImage;
     }
   </script>
 
