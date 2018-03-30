@@ -254,6 +254,12 @@
           styles: styles,
           mapTypeControl: false
         });
+        //Autocomplete addition to searches
+        var timeAutocomplete = new google.maps.places.Autocomplete(
+          document.getElementById('search-within-time-text'));
+        var zoomAutocomplete = new google.maps.places.Autocomplete(
+          document.getElementById('zoom-to-area-text'));
+
         var locations = [{
             title: 'Canton Public Library',
             location: {
@@ -498,7 +504,7 @@
         var directionsService = new google.maps.DirectionsService;
         // Get the destination address from the user entered value.
         var destinationAddress =
-            document.getElementById('search-within-time-text').value;
+          document.getElementById('search-within-time-text').value;
         var mode = document.getElementById('mode').value;
         directionsService.route({
           // The origin is the passed in marker's position.
@@ -523,7 +529,7 @@
       }
     </script>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJuEMieAPU-az8fmXVa1JcT5Ug6qEHqS0&libraries=geometry&v=3&callback=initMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJuEMieAPU-az8fmXVa1JcT5Ug6qEHqS0&libraries=places,geometry&v=3&callback=initMap">
     </script>
 
 </body>
