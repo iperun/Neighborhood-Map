@@ -63,6 +63,7 @@
       height: 200px;
     }
 
+    #places-search,
     #search-within-time-text {
       width: 84%;
     }
@@ -87,8 +88,8 @@
     <div class="options-box">
       <h1>Hello</h1>
       <div>
-        <input id="show-listings" type="button" value="Show Listings">
-        <input id="hide-listings" type="button" value="Hide Listings">
+        <input id="show-listings" type="button" value="Show Locations">
+        <input id="hide-listings" type="button" value="Hide Locations">
         <hr>
         <div>
           <input id="zoom-to-area-text" type="text" placeholder="Enter your favorite area!">
@@ -113,12 +114,21 @@
           <input id="search-within-time-text" type="text" placeholder="Ex: Amber Road Cafe, Canton, MA">
           <input id="search-within-time" type="button" value="Go">
         </div>
+        <hr>
+        <div>
+          <span class="text">Search for nearby places</span>
+          <input id="places-search" type="text" placeholder="Ex: Restaurants">
+          <input id="go-places" type="button" value="Go">
+        </div>
       </div>
       <div id="map"></div>
     </div>
     <script>
       var map;
+
       var markers = [];
+
+      var placeMarkers = [];
 
       function initMap() {
         var styles = [{
@@ -254,11 +264,16 @@
           styles: styles,
           mapTypeControl: false
         });
+
         //Autocomplete addition to searches
         var timeAutocomplete = new google.maps.places.Autocomplete(
           document.getElementById('search-within-time-text'));
         var zoomAutocomplete = new google.maps.places.Autocomplete(
           document.getElementById('zoom-to-area-text'));
+        zoomAutocomplete.bindTo('bounds', map);
+        var searchBox = new google.maps.places.SearchBox(
+          document.getElementById('places-search'));
+        searchBox.setBounds(map.getBounds());
 
         var locations = [{
             title: 'Canton Public Library',
@@ -303,10 +318,13 @@
             }
           }
         ];
+
         var largeInfowindow = new google.maps.InfoWindow();
+
         var defaultIcon = makeMarkerIcon('0091ff');
+
         var highlightedIcon = makeMarkerIcon('FFFF24');
-        var largeInfowindow = new google.maps.InfoWindow();
+
         for (var i = 0; i < locations.length; i++) {
           var position = locations[i].location;
           var title = locations[i].title;
@@ -330,8 +348,11 @@
             this.setIcon(defaultIcon);
           });
         }
+
         document.getElementById('show-listings').addEventListener('click', showListings);
-        document.getElementById('hide-listings').addEventListener('click', hideListings);
+        document.getElementById('hide-listings').addEventListener('click', function() {
+          hideMarkers(markers);
+        });
         document.getElementById('zoom-to-area').addEventListener('click', function() {
           zoomToArea();
         });
@@ -339,6 +360,12 @@
         document.getElementById('search-within-time').addEventListener('click', function() {
           searchWithinTime();
         });
+
+        searchBox.addListener('places_changed', function() {
+          searchBoxPlaces(this);
+        });
+
+        document.getElementById('go-places').addEventListener('click', textSearchPlaces);
       }
 
       function populateInfoWindow(marker, infowindow) {
@@ -390,7 +417,7 @@
         map.fitBounds(bounds);
       }
 
-      function hideListings() {
+      function hideMarkers(markers) {
         for (var i = 0; i < markers.length; i++) {
           markers[i].setMap(null);
         }
@@ -435,7 +462,7 @@
         if (address == '') {
           window.alert('You must enter an address.');
         } else {
-          hideListings();
+          hideMarkers(markers);
           // Use the distance matrix service to calculate the duration of the
           // routes between all our markers, and the destination address entered
           // by the user. Then put all the origins into an origin matrix.
@@ -500,16 +527,13 @@
       }
 
       function displayDirections(origin) {
-        hideListings();
+        hideMarkers(markers);
         var directionsService = new google.maps.DirectionsService;
-        // Get the destination address from the user entered value.
         var destinationAddress =
           document.getElementById('search-within-time-text').value;
         var mode = document.getElementById('mode').value;
         directionsService.route({
-          // The origin is the passed in marker's position.
           origin: origin,
-          // The destination is user entered address.
           destination: destinationAddress,
           travelMode: google.maps.TravelMode[mode]
         }, function(response, status) {
@@ -527,9 +551,92 @@
           }
         });
       }
+      // This function is in response to the user selecting "show route" on one
+      // of the markers within the calculated distance. This will display the route
+      // on the map.
+      function displayDirections(origin) {
+        hideMarkers(markers);
+        var directionsService = new google.maps.DirectionsService;
+        var destinationAddress =
+          document.getElementById('search-within-time-text').value;
+        var mode = document.getElementById('mode').value;
+        directionsService.route({
+          origin: origin,
+          destination: destinationAddress,
+          travelMode: google.maps.TravelMode[mode]
+        }, function(response, status) {
+          if (status === google.maps.DirectionsStatus.OK) {
+            var directionsDisplay = new google.maps.DirectionsRenderer({
+              map: map,
+              directions: response,
+              draggable: true,
+              polylineOptions: {
+                strokeColor: 'green'
+              }
+            });
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+      }
+      //Nearby search using the selected query string or place.
+      function searchBoxPlaces(searchBox) {
+        hideMarkers(placeMarkers);
+        var places = searchBox.getPlaces();
+        createMarkersForPlaces(places);
+        if (places.length == 0) {
+          window.alert('We did not find any places matching that search!');
+        }
+      }
+
+      function textSearchPlaces() {
+        var bounds = map.getBounds();
+        hideMarkers(placeMarkers);
+        var placesService = new google.maps.places.PlacesService(map);
+        placesService.textSearch({
+          query: document.getElementById('places-search').value,
+          bounds: bounds
+        }, function(results, status) {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            createMarkersForPlaces(results);
+          }
+        });
+      }
+      // This function creates markers for each place found in either places search.
+      function createMarkersForPlaces(places) {
+        var bounds = new google.maps.LatLngBounds();
+        for (var i = 0; i < places.length; i++) {
+          var place = places[i];
+          var icon = {
+            url: place.icon,
+            size: new google.maps.Size(35, 35),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(15, 34),
+            scaledSize: new google.maps.Size(25, 25)
+          };
+          // Create a marker for each place.
+          var marker = new google.maps.Marker({
+            map: map,
+            icon: icon,
+            title: place.name,
+            position: place.geometry.location,
+            id: place.id
+          });
+          marker.addListener('click', function() {
+            getPlacesDetails(this, place);
+          });
+          placeMarkers.push(marker);
+          if (place.geometry.viewport) {
+            bounds.union(place.geometry.viewport);
+          } else {
+            bounds.extend(place.geometry.location);
+          }
+        }
+        map.fitBounds(bounds);
+      }
     </script>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCJuEMieAPU-az8fmXVa1JcT5Ug6qEHqS0&libraries=places,geometry&v=3&callback=initMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry&key=AIzaSyCJuEMieAPU-az8fmXVa1JcT5Ug6qEHqS0&v=3&callback=initMap">
     </script>
 
 </body>
