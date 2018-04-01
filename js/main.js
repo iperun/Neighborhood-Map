@@ -1,4 +1,4 @@
-<script>
+
   var map;
 
   var markers = [];
@@ -532,4 +532,3 @@
       }
     });
   }
-</script>
