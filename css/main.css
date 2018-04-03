@@ -17,3 +17,11 @@ img {
   margin-top: 4px;
   margin-bottom: 4px;
   }
+
+#map {
+  bottom: 0px;
+  height: 100%;
+  width: 80%;
+  position: absolute;
+  right: 0px;
+  }

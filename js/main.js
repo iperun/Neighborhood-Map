@@ -1,11 +1,10 @@
-
   var map;
-
   var markers = [];
-
   var placeMarkers = [];
 
+
   function initMap() {
+    "use strict";
     var styles = [{
         "elementType": "geometry",
         "stylers": [{
@@ -139,18 +138,21 @@
       styles: styles,
       mapTypeControl: false
     });
+    ko.applyBindings(new AppViewModel());
 
-    //Autocomplete addition to searches
-    var timeAutocomplete = new google.maps.places.Autocomplete(
-      document.getElementById('search-within-time-text'));
-    var zoomAutocomplete = new google.maps.places.Autocomplete(
-      document.getElementById('zoom-to-area-text'));
-    zoomAutocomplete.bindTo('bounds', map);
-    var searchBox = new google.maps.places.SearchBox(
-      document.getElementById('places-search'));
-    searchBox.setBounds(map.getBounds());
+}
 
-    var locations = [{
+// Google Map Error!
+  function googleMapsError() {
+      alert('Google Maps did not load properly, please try again!');
+  }
+
+//Knockout's View Model
+var AppViewModel = function () {
+    var self = this;
+
+
+    var Locations = [{
         title: 'Canton Public Library',
         location: {
           lat: 42.158776,
