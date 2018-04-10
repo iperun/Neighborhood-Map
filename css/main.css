@@ -25,3 +25,12 @@ img {
   position: absolute;
   right: 0px;
   }
+
+aside {
+      position: absolute;
+      top: 80px;
+      bottom: 0px;
+      right: inherit;
+      overflow: auto;
+      width: 20%;
+  }

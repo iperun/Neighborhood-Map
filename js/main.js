@@ -2,7 +2,7 @@
   var markers = [];
   var placeMarkers = [];
 
-
+// Google Map & Styling
   function initMap() {
     "use strict";
     var styles = [{
