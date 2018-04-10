@@ -1,5 +1,6 @@
   var map;
 
+
 // Google Map & Styling
   function initMap() {
     "use strict";
@@ -145,54 +146,54 @@
       alert('Google Maps did not load properly, please try again!');
   }
 
+// Locations Model
+  var Locations = [{
+      title: 'Canton Public Library',
+      location: {
+        lat: 42.158776,
+        lng: -71.145639
+      }
+    },
+    {
+      title: 'Amber Road Cafe',
+      location: {
+        lat: 42.153988,
+        lng: -71.145644
+      }
+    },
+    {
+      title: 'Dance Out',
+      location: {
+        lat: 42.162805,
+        lng: -71.160362
+      }
+    },
+    {
+      title: 'The Grape Leaf',
+      location: {
+        lat: 42.152014,
+        lng: -71.148062
+      }
+    },
+    {
+      title: 'Canton Junction Sports Pub',
+      location: {
+        lat: 42.160281,
+        lng: -71.155584
+      }
+    },
+    {
+      title: 'Childrens World Indoor Playground',
+      location: {
+        lat: 42.166293,
+        lng: -71.110358
+      }
+    }
+  ];
+
+
 //Knockout's View Model
 var AppViewModel = function () {
     var self = this;
 
-
-    var Locations = [{
-        title: 'Canton Public Library',
-        location: {
-          lat: 42.158776,
-          lng: -71.145639
-        }
-      },
-      {
-        title: 'Amber Road Cafe',
-        location: {
-          lat: 42.153988,
-          lng: -71.145644
-        }
-      },
-      {
-        title: 'Dance Out',
-        location: {
-          lat: 42.162805,
-          lng: -71.160362
-        }
-      },
-      {
-        title: 'The Grape Leaf',
-        location: {
-          lat: 42.152014,
-          lng: -71.148062
-        }
-      },
-      {
-        title: 'Canton Junction Sports Pub',
-        location: {
-          lat: 42.160281,
-          lng: -71.155584
-        }
-      },
-      {
-        title: 'Childrens World Indoor Playground',
-        location: {
-          lat: 42.166293,
-          lng: -71.110358
-        }
-      }
-    ];
-
-    document.getElementById('go-places').addEventListener('click', textSearchPlaces);
   }
