@@ -44,12 +44,13 @@
     <div class="container-fluid">
       <div class="row">
         <div id="map"></div>
+        <!-- Locations List -->
         <aside>
-            <ul class="list-group" data-bind="foreach: {data: FilterLocationList, as: 'Location'}" id="list">
-                <li data-bind="click: $root.selectLocation" class="list-group-item">
-                    <span data-bind="text: location.name"></span>
-                </li>
-            </ul>
+          <ul class="list-group" data-bind="foreach: defaultLocations">
+            <li data-bind="click: $root.mapLocations" class="list-group-item">
+              <span data-bind="text: defaultLocations.name"></span>
+            </li>
+          </ul>
         </aside>
       </div>
     </div>

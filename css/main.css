@@ -4,10 +4,9 @@ body {
   height: 100%;
   margin: 0;
   padding-top: 2px;
-  }
+}
 
-
-.nav-title{
+.nav-title {
   font-size: 20px;
   color: #b3e0ff;
 }
@@ -16,7 +15,7 @@ img {
   border: 0;
   margin-top: 4px;
   margin-bottom: 4px;
-  }
+}
 
 #map {
   bottom: 0px;
@@ -24,13 +23,21 @@ img {
   width: 80%;
   position: absolute;
   right: 0px;
-  }
+}
 
 aside {
-      position: absolute;
-      top: 80px;
-      bottom: 0px;
-      right: inherit;
-      overflow: auto;
-      width: 20%;
-  }
+  background-color: #e0e0eb;
+  position: absolute;
+  top: 72px;
+  bottom: 0px;
+  overflow: auto;
+  width: 20%;
+}
+
+.list-group-item {
+  margin: 20px;
+  color: #b3e0ff;
+  border-right: solid;
+  border-left: solid;
+  border-bottom: solid;
+}
