@@ -46,11 +46,11 @@
         <div id="map"></div>
         <!-- Locations List -->
         <aside>
-          <ul class="list-group" data-bind="foreach: defaultLocations">
-            <li data-bind="click: $root.mapLocations" class="list-group-item">
-              <span data-bind="text: defaultLocations.name"></span>
+          <div class="list-group">
+            <div class="list-group" data-bind="foreach: defaultLocations">
+            <li data-bind=""class="list-group-item">
+              <span data-bind="text: title, click: show"></span>
             </li>
-          </ul>
         </aside>
       </div>
     </div>
