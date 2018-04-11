@@ -46,13 +46,12 @@
         <div id="map"></div>
         <!-- Locations List -->
         <aside>
-          <div class="list-group">
-            <div class="list-group" data-bind="foreach: mapLocations">
-            <li data-bind=""class="list-group-item">
-              <span data-bind="text: title, click: show"></span>
-            </li>
-          </div>
-        </div>
+          <ul class="list-group">
+            <li class="list-group-item" data-bind="foreach: mapLocations">
+              <a href="#" class="list-group-item list-group-item-action">
+            <span data-bind="text: title"></span></a>
+          </li>
+        </ul>
         </aside>
   </main>
 
