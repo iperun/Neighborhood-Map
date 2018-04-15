@@ -200,21 +200,21 @@ var LocationMarker = function(data) {
   this.title = data.title;
   this.position = data.location;
   this.street = '',
-  this.city = '',
-
+    this.city = '';
 
   this.visible = ko.observable(true);
 
-// JSON request data
+  // JSON request data
   var foursquareURL = 'https://api.foursquare.com/v2/venues/search?ll=' + this.position.lat + ',' + this.position.lng + '&client_id=' + clientID + '&client_secret=' + clientSecret + '&v=20180323' + '&query=' + this.title;
 
-  $.getJSON(foursquareURL).done(function (data) {
-       var results = data.response.venues[0];
-       self.street =  results.location.formattedAddress[0] ? results.location.formattedAddress[0]: 'No Address Provided';
-       self.city =results.location.formattedAddress[1] ? results.location.formattedAddress[1]: 'No Address Provided';
-   }).fail(function () {
        $('.list').html('There was an error with Foursquare API call, pelase try again.');
-   });
+  $.getJSON(foursquareURL).done(function(data) {
+    var results = data.response.venues[0];
+    self.street = results.location.formattedAddress[0] ? results.location.formattedAddress[0] : 'No Address Provided';
+    self.city = results.location.formattedAddress[1] ? results.location.formattedAddress[1] : 'No Address Provided';
+  }).fail(function() {
+    alert('There was an error with Foursquare API call, pelase try again.');
+  });
 
 
   // Marker styling
@@ -249,7 +249,6 @@ var LocationMarker = function(data) {
   this.marker.addListener('mouseout', function() {
     this.setIcon(defaultIcon);
   });
-
 
 };
 
