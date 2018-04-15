@@ -45,6 +45,10 @@ var defaultLocations = [{
 
 var map;
 var bounds;
+var infoWindow;
+//Foursquare API cedentials
+var clientID = 'IDTZ0OV11IFQA2NU4HS4RFAI1OFTZUSYQGMJX4TIC1EG0BMK';
+var clientSecret = 'NTZSU0QQRRNU3C3R3HJL4AK0LYKUQEH5MRZLPMPQUPD2DJFF';
 
 // Google Map & Styling
 function initMap() {
@@ -183,6 +187,7 @@ function initMap() {
   });
 
   bounds = new google.maps.LatLngBounds();
+  infoWindow = new google.maps.InfoWindow();
 
   ko.applyBindings(new AppViewModel());
 
