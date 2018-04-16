@@ -19,6 +19,21 @@
 </head>
 
 <body>
+  <!-- Show Google Map -->
+  <main>
+    <div class="container-fluid">
+      <div class="row">
+        <div id="map"></div>
+        <!-- Locations List -->
+        <aside>
+          <ul class="list-group">
+            <li class="list-group-item" data-bind="foreach: locationFilter">
+              <a href="#" class="list-group-item list-group-item-action">
+            <span data-bind="text: title, click: showLocation"></span></a>
+            </li>
+          </ul>
+        </aside>
+  </main>
   <!-- NavBar -->
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -39,21 +54,7 @@
       </form>
     </div>
   </nav>
-  <!-- Show Google Map -->
-  <main>
-    <div class="container-fluid">
-      <div class="row">
-        <div id="map"></div>
-        <!-- Locations List -->
-        <aside>
-          <ul class="list-group">
-            <li class="list-group-item" data-bind="foreach: locationFilter">
-              <a href="#" class="list-group-item list-group-item-action">
-            <span data-bind="text: title, click: showLocation"></span></a>
-            </li>
-          </ul>
-        </aside>
-  </main>
+
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
