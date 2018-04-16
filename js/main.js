@@ -249,7 +249,7 @@ var LocationMarker = function(data) {
     populateInfoWindow(this, self.street, self.city, infoWindow);
   });
 
-// Shows locations when clicked from lcoation list
+  // Shows locations when clicked from lcoation list
   this.showLocation = function(location) {
     google.maps.event.trigger(self.marker, 'click');
   };
@@ -271,12 +271,30 @@ var AppViewModel = function() {
 
   this.mapLocations = ko.observableArray([]);
 
+  this.searchTerm = ko.observable('');
+
   // add location markers for each location
   defaultLocations.forEach(function(location) {
     self.mapLocations.push(new LocationMarker(location));
   });
 
+  this.locationFilter = ko.computed(function() {
+    var searchFilter = self.searchTerm().toLowerCase();
+    if (searchFilter) {
+      return ko.utils.arrayFilter(self.mapLocations(), function(location) {
+        var str = location.title.toLowerCase();
+        var result = str.includes(searchFilter);
+        location.visible(result);
+        return result;
+      });
+    }
+    self.mapLocations().forEach(function(location) {
+      location.visible(true);
+    });
+    return self.mapLocations();
+  }, self);
 };
+
 
 // This function populates the infowindow when the marker is clicked. We'll only allow
 // one infowindow which will open at the marker that is clicked, and populate based
