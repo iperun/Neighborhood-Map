@@ -249,6 +249,11 @@ var LocationMarker = function(data) {
     populateInfoWindow(this, self.street, self.city, infoWindow);
   });
 
+// Shows locations when clicked from lcoation list
+  this.showLocation = function(location) {
+    google.maps.event.trigger(self.marker, 'click');
+  };
+
   // Two event listeners - one for mouseover, one for mouseout,
   // to change the colors back and forth.
   this.marker.addListener('mouseover', function() {
