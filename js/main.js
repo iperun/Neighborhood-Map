@@ -191,6 +191,11 @@ function initMap() {
 
   ko.applyBindings(new AppViewModel());
 
+  // Google Map Error!
+  function googleMapsError() {
+    alert('Google Maps did not load properly, please try again!');
+  }
+
 }
 
 // Location and Foursquare Model
@@ -207,13 +212,12 @@ var LocationMarker = function(data) {
   // JSON request data
   var foursquareURL = 'https://api.foursquare.com/v2/venues/search?ll=' + this.position.lat + ',' + this.position.lng + '&client_id=' + clientID + '&client_secret=' + clientSecret + '&v=20180323' + '&query=' + this.title;
 
-       $('.list').html('There was an error with Foursquare API call, pelase try again.');
   $.getJSON(foursquareURL).done(function(data) {
     var results = data.response.venues[0];
     self.street = results.location.formattedAddress[0] ? results.location.formattedAddress[0] : 'No Address Provided';
     self.city = results.location.formattedAddress[1] ? results.location.formattedAddress[1] : 'No Address Provided';
   }).fail(function() {
-    alert('There was an error with Foursquare API call, pelase try again.');
+    alert('There was an error with Foursquare API call, please try again.');
   });
 
 
@@ -277,9 +281,4 @@ function makeMarkerIcon(markerColor) {
     new google.maps.Point(10, 34),
     new google.maps.Size(21, 34));
   return markerImage;
-}
-
-// Google Map Error!
-function googleMapsError() {
-  alert('Google Maps did not load properly, please try again!');
 }
