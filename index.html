@@ -24,15 +24,6 @@
     <div class="container-fluid">
       <div class="row">
         <div id="map"></div>
-        <!-- Locations List -->
-        <aside>
-          <ul class="list-group">
-            <li class="list-group-item" data-bind="foreach: locationFilter">
-              <a href="#" class="list-group-item list-group-item-action">
-            <span data-bind="text: title, click: showLocation"></span></a>
-            </li>
-          </ul>
-        </aside>
   </main>
   <!-- NavBar -->
   <nav class="navbar navbar-inverse">
@@ -54,6 +45,13 @@
       </form>
     </div>
   </nav>
+  <!-- Locations List -->
+  <ul class="nav list-group">
+    <li class="list-group-item" data-bind="foreach: locationFilter">
+      <a href="#" class="list-group-item list-group-item-action">
+    <span data-bind="text: title, click: showLocation"></span></a>
+    </li>
+  </ul>
 
 
   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

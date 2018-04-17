@@ -7,7 +7,7 @@ body {
 }
 
 .nav-title {
-  font-size: 16px;
+  font-size: 20px;
   color: #b3e0ff;
 }
 
@@ -20,19 +20,11 @@ img {
 #map {
   bottom: 0px;
   height: 100%;
-  width: 80%;
+  width: 100%;
   position: absolute;
   right: 0px;
 }
 
-aside {
-  background-color: #e0e0eb;
-  position: absolute;
-  top: 72px;
-  bottom: 0px;
-  overflow: auto;
-  width: 30%;
-}
 
 .list-group-item {
   margin-top:auto;
@@ -45,5 +37,5 @@ aside {
 
 span {
   color: #000000;
-  font-size: 16px;
+  font-size: 14px;
 }
