@@ -2,7 +2,7 @@
 
 ### Project Overview
 Single page application featuring a map of my neighborhood.
-Includes functionality of highlighted locations, third-party data about the locations and various ways to browse the content.
+Includes functionality of highlighted locations, third-party data about the locations, and various ways to browse the content.
 
 ### To get started
 - Clone or download the repository.
