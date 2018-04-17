@@ -25,9 +25,13 @@ img {
   right: 0px;
 }
 
+.list-group {
+  display: inline-block;
+  width: 40%;
+}
 
 .list-group-item {
-  margin-top:auto;
+  margin-top: auto;
   margin: auto;
   color: #b3e0ff;
   border-right: solid;
@@ -37,5 +41,19 @@ img {
 
 span {
   color: #000000;
-  font-size: 14px;
+  font-size: 16px;
+}
+
+/* Media  Q */
+
+@media only screen and (min-width: 778px) {
+  .list-group {
+    width: 23%;
+  }
+}
+
+@media only screen and (max-width: 320px) {
+  .list-group {
+    width: 60%;
+  }
 }
