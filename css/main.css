@@ -44,16 +44,7 @@ span {
   font-size: 16px;
 }
 
-/* Media  Q */
-
-@media only screen and (min-width: 778px) {
-  .list-group {
-    width: 23%;
-  }
-}
-
-@media only screen and (max-width: 320px) {
-  .list-group {
-    width: 60%;
-  }
+.dropdown-toggle {
+  background-color: #333;
+  color: #bb99ff;
 }
