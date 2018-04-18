@@ -247,6 +247,7 @@ var LocationMarker = function(data) {
 
   this.marker.addListener('click', function() {
     populateInfoWindow(this, self.street, self.city, infoWindow);
+    toggleBounce(this);
   });
 
   // Shows locations when clicked from lcoation list
@@ -324,4 +325,15 @@ function makeMarkerIcon(markerColor) {
     new google.maps.Point(10, 34),
     new google.maps.Size(21, 34));
   return markerImage;
+}
+
+function toggleBounce(marker) {
+  if (marker.getAnimation() !== null) {
+    marker.setAnimation(null);
+  } else {
+    marker.setAnimation(google.maps.Animation.BOUNCE);
+    setTimeout(function() {
+        marker.setAnimation(null);
+    }, 4200);
+  }
 }
