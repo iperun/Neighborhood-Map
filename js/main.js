@@ -35,10 +35,10 @@ var defaultLocations = [{
     }
   },
   {
-    title: 'Childrens World Indoor Playground',
+    title: 'Canton Town Hall',
     location: {
-      lat: 42.166293,
-      lng: -71.110358
+      lat: 42.159085,
+      lng: -71.144307
     }
   }
 ];
