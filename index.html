@@ -19,32 +19,30 @@
 </head>
 
 <body>
-  <!-- Show Google Map -->
   <main>
-    <div class="container-fluid">
-      <div class="row">
-        <div id="map"></div>
-  </main>
-  <!-- NavBar -->
-  <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-      <div class="navbar-header" href="#">
-        <div class="navbar-brand">
-          <span class="nav-title">Neighborhood Locations</span>
-        </div>
-        <img src="img/compass.jpg" width="70" height="60" alt="compass">
-      </div>
-      <!-- Search Bar -->
-      <form class="navbar-form navbar-right" role="search">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search" data-bind="textInput: searchTerm, valueUpdate: 'afterkeydown'">
-          <div class="input-group-btn">
-            <button class="btn btn-info"><i class="glyphicon glyphicon-search"></i></button>
+    <!-- Show Google Map -->
+    <div id="map"></div>
+    <!-- NavBar -->
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header" href="#">
+          <div class="navbar-brand">
+            <span class="nav-title">Neighborhood Locations</span>
           </div>
+          <img src="img/compass.jpg" width="70" height="60" alt="compass">
         </div>
-      </form>
-    </div>
-  </nav>
+        <!-- Search Bar -->
+        <form class="navbar-form navbar-right" role="search">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" data-bind="textInput: searchTerm, valueUpdate: 'afterkeydown'">
+            <div class="input-group-btn">
+              <button class="btn btn-info"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </nav>
+  </main>
   <!-- Locations List -->
   <ul class="nav nav-pills list-group">
     <li class="dropdown">
