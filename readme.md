@@ -13,9 +13,9 @@ Includes functionality of highlighted locations, third-party data about the loca
 - Open the index.html file.
 
 ### Tools Used
-- [Bootstrap](http://getbootstrap.com/)
-- [Knockout.js](http://knockoutjs.com/documentation/introduction.html)
-- [jQuery](http://api.jquery.com/)
+- [Bootstrap](https://getbootstrap.com/)
+- [Knockout.js](https://knockoutjs.com/documentation/introduction.html)
+- [jQuery](https://api.jquery.com/)
 - [Google Map API V3](https://developers.google.com/maps/documentation/javascript/reference)
 - [Foursquare API](https://developer.foursquare.com)
 
