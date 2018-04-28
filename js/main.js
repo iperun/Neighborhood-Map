@@ -206,6 +206,7 @@ var LocationMarker = function(data) {
   this.position = data.location;
   this.street = '',
     this.city = '';
+  this.phone = '';
 
   this.visible = ko.observable(true);
 
@@ -216,6 +217,7 @@ var LocationMarker = function(data) {
     var results = data.response.venues[0];
     self.street = results.location.formattedAddress[0] ? results.location.formattedAddress[0] : 'No Address Provided';
     self.city = results.location.formattedAddress[1] ? results.location.formattedAddress[1] : 'No Address Provided';
+    self.phone = results.contact.formattedPhone ? results.contact.formattedPhone : 'N/A';
   }).fail(function() {
     alert('There was an error with Foursquare API call, please try again.');
   });
@@ -246,8 +248,9 @@ var LocationMarker = function(data) {
   });
 
   this.marker.addListener('click', function() {
-    populateInfoWindow(this, self.street, self.city, infoWindow);
+    populateInfoWindow(this, self.street, self.city, self.phone, infoWindow);
     toggleBounce(this);
+    map.panTo(this.getPosition());
   });
 
   // Shows locations when clicked from lcoation list
@@ -300,17 +303,49 @@ var AppViewModel = function() {
 // This function populates the infowindow when the marker is clicked. We'll only allow
 // one infowindow which will open at the marker that is clicked, and populate based
 // on that markers position.
-function populateInfoWindow(marker, street, city, infowindow) {
-  // Check to make sure the infowindow is not already opened on this marker.
+function populateInfoWindow(marker, street, city, phone, infowindow) {
   if (infowindow.marker != marker) {
+    // Clear the infowindow content to give the streetview time to load.
+    infowindow.setContent('');
     infowindow.marker = marker;
-    infowindow.setContent('<div>' + marker.title +
-    '<p>' + marker.position + '<br>' + street + '<br>' + city + "</p>" + '</div>');
-    infowindow.open(map, marker);
+
     // Make sure the marker property is cleared if the infowindow is closed.
     infowindow.addListener('closeclick', function() {
       infowindow.marker = null;
     });
+    var streetViewService = new google.maps.StreetViewService();
+    var radius = 50;
+
+    var windowContent = '<h4>' + marker.title + '</h4>' +
+      '<p>' + street + "<br>" + city + '<br>' + phone + "</p>";
+
+    // In case the status is OK, which means the pano was found, compute the
+    // position of the streetview image, then calculate the heading, then get a
+    // panorama from that and set the options
+    var getStreetView = function(data, status) {
+      if (status == google.maps.StreetViewStatus.OK) {
+        var nearStreetViewLocation = data.location.latLng;
+        var heading = google.maps.geometry.spherical.computeHeading(
+          nearStreetViewLocation, marker.position);
+        infowindow.setContent(windowContent + '<div id="pano"></div>');
+        var panoramaOptions = {
+          position: nearStreetViewLocation,
+          pov: {
+            heading: heading,
+            pitch: 20
+          }
+        };
+        var panorama = new google.maps.StreetViewPanorama(
+          document.getElementById('pano'), panoramaOptions);
+      } else {
+        infowindow.setContent(windowContent + '<div style="color: red">No Street View Found</div>');
+      }
+    };
+    // Use streetview service to get the closest streetview image within
+    // 50 meters of the markers position
+    streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
+    // Open the infowindow on the correct marker.
+    infowindow.open(map, marker);
   }
 }
 
@@ -334,7 +369,7 @@ function toggleBounce(marker) {
   } else {
     marker.setAnimation(google.maps.Animation.BOUNCE);
     setTimeout(function() {
-        marker.setAnimation(null);
+      marker.setAnimation(null);
     }, 4200);
   }
 }
