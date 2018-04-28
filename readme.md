@@ -4,7 +4,11 @@
 Single page application featuring a map of my neighborhood.
 Includes functionality of highlighted locations, third-party data about the locations, and various ways to browse the content.
 
+![Neighborhood Map](https://github.com/iperun/To-Do-App/blob/master/img/to-do-app.png "Neighborhood Map")
+
 ### To get started
+- Visit the site [HERE](https://iperun.github.io/Neighborhood-Map/)
+- OR
 - Clone or download the repository.
 - Open the index.html file.
 
