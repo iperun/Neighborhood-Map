@@ -151,3 +151,18 @@ a:focus, a:hover {
     margin: 0;
     padding: 0;
   }
+  .controls {
+    margin: 10px 0;
+    float: none;
+  }
+}
+
+.controls {
+  float: right;
+  position: relative;
+  margin: 13px;
+  border-radius: 2px;
+  outline: none;
+  border: none;
+  text-align: center;
+}
