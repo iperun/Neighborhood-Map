@@ -146,3 +146,7 @@ a:focus, a:hover {
 .navbar {
   margin-bottom: 0;
 }
+
+.open>.dropdown-menu {
+  display: inline-block;
+}
