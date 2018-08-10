@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+  <title>Neighborhood Map</title>
+  <link rel="shortcut icon" href="img/favicon.ico" />
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  <!--- Google Fonts --->
+  <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/main.min.css">
+
+</head>
+
+<body>
+  <main>
+    <!-- Show Google Map -->
+    <div id="map"></div>
+    <!-- NavBar -->
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header" href="#">
+          <div class="navbar-brand">
+            <span class="nav-title">Neighborhood Locations</span>
+            <a href="https://github.com/iperun/Neighborhood-Map" target="_blank">
+              <h4 class="git">
+              <div class="fa fa-github-alt"></div> View GitHub</h4>
+            </a>
+          </div>
+        </div>
+
+        <!-- Search Bar -->
+        <form class="navbar-form navbar-right" role="search">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" data-bind="textInput: searchTerm, valueUpdate: 'afterkeydown'">
+            <div class="input-group-btn">
+              <button class="btn btn-info"><i class="glyphicon glyphicon-search"></i></button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </nav>
+  </main>
+  <!-- Locations List -->
+  <ul class="nav nav-pills list-group">
+    <li class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#">Locations<span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <li class="list-group-item" data-bind="foreach: locationFilter">
+          <a href="#" class="list-group-item list-group-item-action">
+    <span data-bind="text: title, click: showLocation"></span></a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+
+  <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script src="js/knockout.min.js"></script>
+  <script src="js/main.min.js"></script>
+  <script async defer onerror="googleMapsError()" src="https://maps.googleapis.com/maps/api/js?libraries=places,geometry&key=AIzaSyCJuEMieAPU-az8fmXVa1JcT5Ug6qEHqS0&v=3&callback=initMap">
+  </script>
+
+</body>
+
+</html>
