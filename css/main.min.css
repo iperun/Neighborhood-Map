@@ -137,16 +137,17 @@ a:focus, a:hover {
   span {
     font-size: 80%;
   }
-.caret {
-  display: none;
-}
-.git {
-  display: none;
-}
-.navbar {
-  margin-bottom: 0;
-}
-
-.open>.dropdown-menu {
-  display: inline-block;
-}
+  .caret {
+    display: none;
+  }
+  .git {
+    display: none;
+  }
+  .navbar {
+    margin-bottom: 0;
+  }
+  .open>.dropdown-menu {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+  }
